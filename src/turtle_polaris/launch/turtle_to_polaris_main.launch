@@ -1,0 +1,9 @@
+<launch>
+  <arg name="lat" default="0"/>
+  <arg name="lon" default="0"/>
+
+ <include file="$(find turtle_polaris)/launch/turtlebot3_sim.launch"/>
+ <include file="$(find turtle_polaris)/launch/turtlebot3_controller.launch"/>
+  <param name="controller/lat" value="$(arg lat)"/>
+  <param name="controller/lon" value="$(arg lon)"/>
+</launch>

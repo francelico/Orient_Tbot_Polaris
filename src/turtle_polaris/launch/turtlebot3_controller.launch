@@ -1,0 +1,13 @@
+<launch>
+ <arg name="lat" default="0"/>
+ <arg name="lon" default="0"/>
+
+ <node pkg="turtle_polaris" type="turtle_polaris_node.py" name="controller" output="screen">
+  <param name="lat" value="$(arg lat)"/>
+  <param name="lon" value="$(arg lon)"/>
+  <param name="loop_freq" value="30"/>
+  <param name="max_ang_speed_rad_s" value="1"/>
+  <param name="kp" value="1"/>
+ </node>
+
+ </launch>

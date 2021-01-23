@@ -13,12 +13,6 @@ class Turtle_polaris(Utils):
     def __init__(self, *args):
         super(Turtle_polaris, self).__init__(*args)
 
-        # TODO add as launchfile params
-        self.max_angspeed_rad_s = 1
-        self.kp = 1
-        self.lon = 0
-        self.lat = 0
-
     def obtain_yaw(self):
         q = (self.odom.pose.pose.orientation.x, self.odom.pose.pose.orientation.y, self.odom.pose.pose.orientation.z, self.odom.pose.pose.orientation.w)
         euler = tf.transformations.euler_from_quaternion(q)
@@ -37,7 +31,7 @@ class Turtle_polaris(Utils):
         if yaw_e_rad >= 0 :
             yaw_com_rad = min(self.max_angspeed_rad_s, self.kp * yaw_e_rad)
         else :
-            yaw_com_rad = max(-self.max_angspeed_rad_s, self.kp * yaw_e_rad)
+            yaw_com_rad = max(-float(self.max_angspeed_rad_s), self.kp * yaw_e_rad)
 
         rospy.loginfo("yaw error:"+str(yaw_e_rad))
         rospy.loginfo("yaw command:"+str(yaw_com_rad))
@@ -52,13 +46,13 @@ class Turtle_polaris(Utils):
         #note: this is defined outside of the execution loop as the robot is not moving location.
         yaw_req_rad = true_north_bearing(self.lat, self.lon)
 
-        # TODO fix bug that terminal doesn't always kill itself with Ctrl+C
         while not rospy.is_shutdown():
             yaw_rad = self.obtain_yaw()
             self.rotate(yaw_rad, yaw_req_rad)
 
             rospy.loginfo("current yaw:"+str(yaw_rad))
             rospy.loginfo("yaw req:"+str(yaw_req_rad))
+            rate.sleep()
 
 def main():
     rospy.init_node('turtle_polaris', anonymous=True)
