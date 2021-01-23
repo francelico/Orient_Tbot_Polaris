@@ -21,6 +21,7 @@ class Utils(object):
         self.main_loop_freq = rospy.get_param('~loop_freq')
         self.max_angspeed_rad_s = rospy.get_param('~max_ang_speed_rad_s')
         self.kp = rospy.get_param('~kp')
+        self.ki = rospy.get_param('~ki')
         self.lat = rospy.get_param('~lat')
         self.lon = rospy.get_param('~lon')
 

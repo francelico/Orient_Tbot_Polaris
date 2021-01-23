@@ -6,12 +6,14 @@ import math
 from geometry_msgs.msg import Twist
 
 from utils import Utils
+from PI_controller import PI
 from bearing import true_north_bearing
 
 class Turtle_polaris(Utils):
 
     def __init__(self, *args):
         super(Turtle_polaris, self).__init__(*args)
+        self.PI_controller = PI(self.kp, self.ki)
 
     def obtain_yaw(self):
         q = (self.odom.pose.pose.orientation.x, self.odom.pose.pose.orientation.y, self.odom.pose.pose.orientation.z, self.odom.pose.pose.orientation.w)
@@ -28,18 +30,24 @@ class Turtle_polaris(Utils):
         if yaw_e_rad < - math.pi:
             yaw_e_rad += 2 * math.pi
 
-        if yaw_e_rad >= 0 :
-            yaw_com_rad = min(self.max_angspeed_rad_s, self.kp * yaw_e_rad)
-        else :
-            yaw_com_rad = max(-float(self.max_angspeed_rad_s), self.kp * yaw_e_rad)
+        yaw_com = self.PI_controller.update(yaw_e_rad)
+        yaw_com = self.sat(yaw_com, self.max_angspeed_rad_s)
 
         rospy.loginfo("yaw error:"+str(yaw_e_rad))
-        rospy.loginfo("yaw command:"+str(yaw_com_rad))
+        rospy.loginfo("yaw command:"+str(yaw_com))
 
         # publish the command
         command = Twist()
-        command.angular.z = yaw_com_rad
+        command.angular.z = yaw_com
         self.cmd_vel_pub.publish(command)
+
+    def sat(self, val, sat_val):
+        if val > sat_val:
+            val = sat_val
+        elif val < - sat_val:
+            val = - sat_val
+        
+        return val
     
     def run(self):
         rate = rospy.Rate(self.main_loop_freq)
