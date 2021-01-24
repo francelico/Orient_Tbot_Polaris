@@ -18,10 +18,7 @@ class Test_Turtle_polaris(unittest.TestCase):
 
     def setUp(self):
 
-        #TODO add lon and lat params
-        self.lat = rospy.get_param('~lat')
-        self.lon = rospy.get_param('~lon')
-        self.yaw_success_rad = rospy.get_param('~yaw_success')
+        self.yaw_success_rad = math.radians(rospy.get_param('~yaw_success'))
         #TODO write several tests
         # 3 ways:
         # 1. find a way to terminate the turtle polaris controller node: not practical

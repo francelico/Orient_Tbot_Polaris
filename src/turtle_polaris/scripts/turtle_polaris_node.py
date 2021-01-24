@@ -7,7 +7,7 @@ from geometry_msgs.msg import Twist
 
 from utils import Utils
 from PI_controller import PI
-from bearing import true_north_bearing
+from lib.mag_declination.declination_wrapper import true_north_heading
 
 class Turtle_polaris(Utils):
 
@@ -49,7 +49,7 @@ class Turtle_polaris(Utils):
     def run(self):
         rate = rospy.Rate(self.main_loop_freq)
         #note: this is defined outside of the execution loop as the robot is not moving location.
-        yaw_req_rad = true_north_bearing(self.lat, self.lon)
+        yaw_req_rad = true_north_heading(self.lat, self.lon, self.alt_m)
 
         while not rospy.is_shutdown():
             yaw_rad = self.obtain_yaw()

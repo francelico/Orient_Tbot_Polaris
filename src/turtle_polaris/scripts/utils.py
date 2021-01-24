@@ -24,6 +24,7 @@ class Utils(object):
         self.ki = rospy.get_param('~ki')
         self.lat = rospy.get_param('~lat')
         self.lon = rospy.get_param('~lon')
+        self.alt_m = rospy.get_param('~alt')
 
         dict_topic_depends = { "/odom" : Odometry}
         success = self.wait_for_topics(dict_topic_depends) # wait for relevant subscribed topics to be ready

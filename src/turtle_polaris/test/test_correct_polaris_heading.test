@@ -1,15 +1,15 @@
 <launch>
   <arg name="lat" default="0.0"/>
   <arg name="lon" default="0.0"/>
-  <arg name="yaw_success" default="1.58599585272"/>
+  <arg name="alt" default="0.0"/>
+  <arg name="yaw_success" default="85.4945"/>
 
  <include file="$(find turtle_polaris)/launch/turtlebot3_sim.launch"/>
  <include file="$(find turtle_polaris)/launch/turtlebot3_controller.launch"/>
   <param name="controller/lat" value="$(arg lat)"/>
   <param name="controller/lon" value="$(arg lon)"/>
+  <param name="controller/alt" value="$(arg lon)"/>
  <test test-name="test_correct_polaris_heading" pkg="turtle_polaris" type="test_correct_polaris_heading.py" >
-  <param name="lat" value="$(arg lat)"/>
-  <param name="lon" value="$(arg lon)"/>
   <param name="yaw_success" value="$(arg yaw_success)"/>
  </test>
 
