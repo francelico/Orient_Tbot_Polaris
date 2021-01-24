@@ -23,11 +23,13 @@ This package requires ROS Melodic and Gazebo 9 and was tested on Ubuntu 18.04. I
 First clone the repository into your catkin workspace src folder. From your catkin workspace, build and source the package using
 
 ```catkin build turtle_polaris```
+
 ```source devel/setup.bash```
 
 You will also need to setup an environment variable to define which Turtlebot3 model you want to use (this package works for all). For example, to set up the burger model as your default model in your bashrc, do:
 
 ```echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc```
+
 ```source ~/.bashrc```
 
 ## Execution
@@ -72,17 +74,17 @@ Several tests cases are designed to check that the robot attains the correct ori
 | 5    | The Magnetic North Pole | Would be impossible in the real world (see Limitations) | 86.83    | 164.07     | 0.0          | -78.3333                 |
 
 ## Known limitations
-The following limitations are identified in the current implementation
+The following limitations are identified in the current implementation:
 - The Turtlebot3 does not have a GPS, so the latitude, longitude and altitude information need to be inputed manually by the user on launch.
 - The Turtlebot3 will not adjust its heading if it is displaced after launch. However this is intentional as estimates of distance travelled would be inacurate without a GPS.
 - The computed magnetic declination is only accurate for the year 2021 as the location of the Magnetic North Pole drifts on a yearly basis. However it is possible to update the year by changing a single line in the code. It was not implemented as an autonomous change as it would greatly complexify the testing architecture.
-- In the real world, the reading from the magnetometer would become inacurate around the North and South magnetic poles. This is due to the fact that the vertical component of the magnetic field becomes larger than the horizontal component in those areas, which are known as Blackout Zones. Both test case 4 and 5 are located in Blackout Zones and therefore would not be practical in the real world.
+- In the real world, the reading from the magnetometer would become inacurate around the North and South magnetic poles. This is due to the fact that the vertical component of the magnetic field becomes larger than the horizontal component in those areas, which are known as Blackout Zones. Both test case 4 and 5 are located in Blackout Zones and therefore would not be practical in the real world. They are present to ensure that the controller is able to handle edge cases without crashing or getting stuck.
 
 ## Future work
 In the future, the following improvements could be achieved:
 
 - Validate the implementation on a real Turtlebot3 robot, as it was only ran in the Gazebo simulator so far.
-- Add a GPS module in order to automatically obtain the latitude, longitude and altitude information. Most modern GPS chips incorporate the World Magnetic Model and therefore the computation of the magnetic declination may become obsolete. Additionally, the GPS could be used as an heading source if two precise and far apart GPS antennas are used. Alternatively the heading may also be recovered by analysing the past trajectory after some movement of the robot. This would allow for a more accurate heading estimation anywhere on Earth, but in particular in the Blackout Zones.
+- Add a GPS module in order to automatically obtain the latitude, longitude and altitude information. Most modern GPS chips incorporate the World Magnetic Model and therefore the computation of the magnetic declination may become obsolete. Additionally, the GPS could be used as an heading source if two precise and far apart GPS antennas are used. Alternatively the heading may also be recovered by analysing the past GPS data after some movement of the robot. This would allow for a more accurate heading estimation anywhere on Earth, but in particular in the Blackout Zones.
 - The above would also enable the robot to be moving while conserving a notion of where the True North heading is located.
 - The above improvements may require a slight rework of the implementation structure, for example by enabling separate threads for each publisher, to allow for a reduction of the delay between messages or commands.
 - There was only a single global integration test implemented in this version due to time constraints. More test cases should be implemented that perform unit tests on each of the methods and classes.
