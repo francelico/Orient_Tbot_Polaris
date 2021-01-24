@@ -8,7 +8,7 @@
   <param name="loop_freq" value="30.0"/>
   <param name="max_ang_speed_rad_s" value="1.0"/>
   <param name="kp" value="1.0"/>
-  <param name="ki" value="0.1"/>
+  <param name="ki" value="0.0"/>
  </node>
 
  </launch>

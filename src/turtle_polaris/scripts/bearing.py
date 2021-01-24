@@ -3,6 +3,10 @@
 import math
 
 def true_north_bearing(lat, lon):
+    # limitations:
+    # This function cannot compute the true north bearing if (lat,lon) = (MAG_N_LAT, MAG_N_LON).
+    # This function will return 1.85 rad at (lat,lon) = (90,0) [True North]. Technically any orientation is pointing to true north at that point.
+
     # North Magnetic dip pole latitude and longitude
     # Note: MAG_N_LAT and MAG_N_LON should be updated every year according to the International Geomagnetic Reference Field
     MAG_N_LAT = 86.83

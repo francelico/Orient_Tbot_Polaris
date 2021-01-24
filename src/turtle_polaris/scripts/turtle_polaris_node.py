@@ -33,9 +33,6 @@ class Turtle_polaris(Utils):
         yaw_com = self.PI_controller.update(yaw_e_rad)
         yaw_com = self.sat(yaw_com, self.max_angspeed_rad_s)
 
-        rospy.loginfo("yaw error:"+str(yaw_e_rad))
-        rospy.loginfo("yaw command:"+str(yaw_com))
-
         # publish the command
         command = Twist()
         command.angular.z = yaw_com
