@@ -53,7 +53,7 @@ The controller is implemented in the `turtle_polaris_node.py` file and incorpora
 - **`PI_controller.py`**: contains the PI class. The class is a PI controller that allows to compute appropriate yaw_rate commands for the robot. Although, in this case, it seems that a simple unit P controller gives the best results. Therefore the I gain is set to 0.
 - **`lib/mag_declination/declination_wrapper.py`**: A wrapper file that contains functions to determine the True North Heading from computing the Magnetic Declination. The function computing the magnetic declination given a latitude, longitude and altitude is implemented in C, and is stored in the compiled library file `declination.so`. It is based on the World Magnetic Model (WMW) for the years 2020-2025 and on open-source software released by NOAA (the National Oceanic and Atmospheric Administration). As far as the author is aware, this makes it the only publicly available library to compute True North in ROS (using Magnetic North, longitude, latitude and altitude as inputs).
 
-`declination.so` is created from the `declination.c` file using coefficients and functions made publicly available by NOAA in the `WMM.COF` and `GeomagnetismLibrary.c` files. If required, declination.so can be recompiled from the `src/turtle_polaris/src/lib/mag_declination` folder using:
+`declination.so` is created from the `declination.c` file using coefficients and functions made publicly available by NOAA in the `WMM.COF` and `GeomagnetismLibrary.c` files. If required, `declination.so` can be recompiled from the `src/turtle_polaris/src/lib/mag_declination` folder using:
 
 ```cc -fPIC -shared -o declination_test.so declination.c GeomagnetismLibrary.c```
 
