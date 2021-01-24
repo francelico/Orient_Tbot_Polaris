@@ -8,6 +8,8 @@ from geometry_msgs.msg import Twist
 
 class Utils(object):
 
+    """Initialises the publisher, subscriber and loads the ros parameters."""
+
     def __init__(self, *args):
 
         # Subscriber

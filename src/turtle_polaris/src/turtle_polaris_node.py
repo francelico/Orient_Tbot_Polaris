@@ -11,6 +11,12 @@ from lib.mag_declination.declination_wrapper import true_north_heading
 
 class Turtle_polaris(Utils):
 
+    """
+    This class is the central implementation of the package. It achieves the following:
+    - Given a lattitude, longitude and altitude, calculate the True North heading, corresponding to the North Pole.
+    - Orient the turtlebot to the True North heading, observe data from the /odom topic and publish angular velocity commands to the /cmd_vel topic.
+    """
+
     def __init__(self, *args):
         super(Turtle_polaris, self).__init__(*args)
         self.PI_controller = PI(self.kp, self.ki)
@@ -22,9 +28,9 @@ class Turtle_polaris(Utils):
         return euler[2]
 
     def rotate(self, yaw_rad, yaw_req_rad):
-        # simple P controller, a PI controller would be most appropriate but steady state error looks negligible
         yaw_e_rad = yaw_req_rad - yaw_rad
 
+        # the robot should follow the smallest distance to its target
         if yaw_e_rad > math.pi:
             yaw_e_rad -= 2 * math.pi
         if yaw_e_rad < - math.pi:
@@ -54,9 +60,6 @@ class Turtle_polaris(Utils):
         while not rospy.is_shutdown():
             yaw_rad = self.obtain_yaw()
             self.rotate(yaw_rad, yaw_req_rad)
-
-            rospy.loginfo("current yaw:"+str(yaw_rad))
-            rospy.loginfo("yaw req:"+str(yaw_req_rad))
             rate.sleep()
 
 def main():

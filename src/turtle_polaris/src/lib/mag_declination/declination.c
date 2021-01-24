@@ -4,7 +4,7 @@ WMM.COF and EGM9615.h to be in the same directory.
 Author Samuel Garcin: https://github.com/francelico
 January 24, 2021
 
-Modified content of code initialy created by:
+Inspired by code written by:
 Manoj.C.Nair@Noaa.Gov
 November 15, 2009
 

@@ -4,10 +4,26 @@ from ctypes import *
 import os
 import math
 
+""" 
+Wrapper file that contains functions to determine the True North Heading from 
+computing the Magnetic Declination. The function computing the magnetic declination 
+given a latitude, longitude and altitude is implemented in C, and is stored in the 
+compiled library file declination.so. It is based on the World Magnetic Model 
+2020-2025 and on open-source software released by NOAA (the National Oceanic and 
+Atmospheric Administration).
+
+References:
+- Chulliat, Arnaud, et al. "The US/UK World Magnetic Model for 
+2020-2025: Technical Report." (2020).
+
+- WMM software: https://www.ngdc.noaa.gov/geomag/WMM/soft.shtml
+
+"""
+
 def declination(lat, lon, alt, date):
     file_path = os.path.dirname(os.path.abspath(__file__))
     b_file_path = file_path.encode('utf-8')
-    so_file = file_path + '/declination_test.so'
+    so_file = file_path + '/declination.so'
     lib = CDLL(so_file)
     lib.declination.argtypes = [c_double, c_double, c_double, c_double, c_char_p]
     lib.declination.restype = c_float

@@ -86,3 +86,10 @@ In the future, the following improvements could be achieved:
 - The above would also enable the robot to be moving while conserving a notion of where the True North heading is located.
 - The above improvements may require a slight rework of the implementation structure, for example by enabling separate threads for each publisher, to allow for a reduction of the delay between messages or commands.
 - There was only a single global integration test implemented in this version due to time constraints. More test cases should be implemented that perform unit tests on each of the methods and classes.
+
+## References
+
+1. Chulliat, Arnaud, et al. "The US/UK World Magnetic Model for 
+2020-2025: Technical Report." (2020).
+
+2. WMM software: https://www.ngdc.noaa.gov/geomag/WMM/soft.shtml

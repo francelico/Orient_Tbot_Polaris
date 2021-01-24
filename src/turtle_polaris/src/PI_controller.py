@@ -3,9 +3,9 @@
 import rospy
 
 class PI(object):
+    """Simple PI controller class"""
 
     def __init__(self, P=1.0, I=0.0):
-
         self.kp = P
         self.ki = I
         self.current_time = rospy.get_time()
